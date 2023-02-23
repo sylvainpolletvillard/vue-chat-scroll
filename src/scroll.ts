@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 /**
  * This function will set the scrollTop of an element using either the
  * scroll method if available, or by changing the scrollTop property.

@@ -1,4 +1,4 @@
-import { DirectiveOptions } from 'vue';
+import { ObjectDirective } from 'vue';
 import { Config, defaultConfig } from './config';
 import { scroll } from './scroll';
 
@@ -32,8 +32,8 @@ const mutationObserved = (el: Element, config: Config): void => {
 /**
  * This object defines the directive itself.
  */
-export const directive: DirectiveOptions = {
-  inserted: (el, binding) => {
+export const directive: ObjectDirective = {
+  mounted: (el, binding) => {
     const config: Config = { ...defaultConfig, ...binding.value };
     mutationObserved(el, config);
   },
@@ -43,7 +43,7 @@ export const directive: DirectiveOptions = {
    * We disconnect the old MutationObserver (if it already exists in observers).
    * We then create and save a new MutationObserver with the new callback.
    */
-  update: (el, binding) => {
+  updated: (el, binding) => {
     if (observers.has(el)) observers.get(el).disconnect();
     const config: Config = { ...defaultConfig, ...binding.value };
     const mutationCallback: MutationCallback = () => { mutationObserved(el, config); };
