@@ -23,9 +23,11 @@ const mutationObserved = (el: Element, config: Config): void => {
   // We're prepending if scrollTop is zero and heights has the el.
   // ScrollTop will be difference in scrollHeight before and after.
   const scrollTop = (el.scrollTop === 0 && heights.has(el))
-    && (el.scrollHeight - heights.get(el));
-
-  scroll(el, scrollTop);
+    && (el.scrollHeight - heights.get(el)!);
+  if(scrollTop){
+    scroll(el, scrollTop);
+  }
+  
   heights.set(el, el.scrollHeight);
 };
 
@@ -44,7 +46,7 @@ export const directive: ObjectDirective = {
    * We then create and save a new MutationObserver with the new callback.
    */
   updated: (el, binding) => {
-    if (observers.has(el)) observers.get(el).disconnect();
+    if (observers.has(el)) observers.get(el)!.disconnect();
     const config: Config = { ...defaultConfig, ...binding.value };
     const mutationCallback: MutationCallback = () => { mutationObserved(el, config); };
     mutationObserved(el, config);
