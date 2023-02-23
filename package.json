@@ -1,6 +1,6 @@
 {
   "name": "vue3-chat-scroll",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "Vue directive to keep things scrolled to the bottom",
   "keywords": [
@@ -18,13 +18,13 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/vue-chat-scroll.umd.js",
-  "module": "./dist/vue-chat-scroll.mjs",
+  "main": "./dist/vue-chat-scroll.umd.cjs",
+  "module": "./dist/vue-chat-scroll.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/vue-chat-scroll.mjs",
-      "require": "./dist/vue-chat-scroll.umd.js"
+      "import": "./dist/vue-chat-scroll.js",
+      "require": "./dist/vue-chat-scroll.umd.cjs"
     }
   },
   "repository": {
