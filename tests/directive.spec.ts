@@ -1,4 +1,4 @@
-import { Component, ref } from 'vue'
+import { Component, reactive, ref } from 'vue'
 import { vi, beforeEach, test, expect } from "vitest"
 import * as vueTestUtils from '@vue/test-utils';
 import { directive } from '../src/directive';
@@ -24,9 +24,9 @@ test('it automatically calls scrolls on init', () => {
 });
 
 test('it calls scroll when an item is added', async () => {
-  const items = []
+  const data = reactive({ items: [] })
   const MyComponent: Component = {
-    data: () => ({ items }),
+    data: () => data,
     template: '<div v-chat-scroll><div v-for="item in items">{{ item }}</div></div>',
   };
 
@@ -38,15 +38,16 @@ test('it calls scroll when an item is added', async () => {
     }
    });
 
-  await wrapper.setData({ items: ['A new item'] });
+  data.items.push('A new item')
+  await wrapper.setData(data);
   expect(scroll).toHaveBeenCalledTimes(1);
   expect(scroll).toHaveBeenCalledWith(wrapper.element);
 });
 
 test('it calls scroll when an item is removed', async () => {
-  const items = [1, 2, 3]
+  const data = reactive({ items: [1, 2, 3] })
   const MyComponent: Component = {
-    data: () => ({ items }),
+    data: () => data,
     template: '<div v-chat-scroll><div v-for="item in items">{{ item }}</div></div>',
   };
 
@@ -58,17 +59,16 @@ test('it calls scroll when an item is removed', async () => {
     }
    });
 
-  items.pop();
-  await wrapper.setData({ items });
+  data.items.pop();
+  await wrapper.setData(data);
   expect(scroll).toHaveBeenCalledTimes(1);
   expect(scroll).toHaveBeenCalledWith(wrapper.element);
 });
 
 test('it obeys the enabled configuration parameter', async () => {
-  const items = [1, 2, 3]
-  const enabled = ref(false)
+  const data = reactive({ items: [1, 2, 3], enabled: false })
   const MyComponent: Component = {
-    data: () => ({ enabled, items }),
+    data: () => data,
     template: '<div v-chat-scroll="{ enabled }"><div v-for="item in items">{{ item }}</div></div>',
   };
 
@@ -79,22 +79,22 @@ test('it obeys the enabled configuration parameter', async () => {
     }
    });
   
-  items.pop();
-  await wrapper.setData({ items });   
+  data.items.pop();
+  await wrapper.setData(data);   
   expect(scroll).not.toHaveBeenCalled();
 
 
-  enabled.value = true;
-  items.pop();
-  await wrapper.setData({ items });
+  data.enabled = true;
+  data.items.pop();
+  await wrapper.setData(data);
   expect(scroll).toHaveBeenCalledTimes(1);
   expect(scroll).toHaveBeenCalledWith(wrapper.element);
 });
 
 test('it correctly works when prepending', async () => {
-  const items = [1,2,3]
+  const data = reactive({ items: [1, 2, 3],  handlePrepend: true })
   const MyComponent: Component = {
-    data: () => ({ handlePrepend: true, items }),
+    data: () => data,
     template: '<div v-chat-scroll="{ handlePrepend }"><div v-for="item in items">{{ item }}</div></div>',
   };
 
@@ -110,8 +110,8 @@ test('it correctly works when prepending', async () => {
   // We've scrolled all the way to the bottom.
   vi.spyOn(wrapper.element, 'scrollTop', 'get').mockImplementation(() => 50);
 
-  items.pop();
-  await wrapper.setData({ items });
+  data.items.pop();
+  await wrapper.setData(data);
   expect(scroll).toHaveBeenCalledWith(wrapper.element, false);
 
   // We've now scrolled all the way to the top.
@@ -119,7 +119,7 @@ test('it correctly works when prepending', async () => {
   // Now the current wrapper should be 75 pixels tall (25 pixel increase).
   vi.spyOn(wrapper.element, 'scrollHeight', 'get').mockImplementation(() => 75);
 
-  items.unshift(0);
-  await wrapper.setData({ items });
+  data.items.unshift(0);
+  await wrapper.setData(data);
   expect(scroll).toHaveBeenCalledWith(wrapper.element, 25);
 });
