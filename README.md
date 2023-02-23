@@ -1,33 +1,33 @@
+# vue3-chat-scroll
+
+This is a fork of [vue-chat-scroll](https://github.com/theomessin/vue-chat-scroll) to make it compatible with Vue 3
+
 ## Installing
 
-#### Using a package manager (recommended)
+### Using a package manager (recommended)
 
-The recommended way of installing _vue-chat-scroll_ is using the [npm package](https://www.npmjs.com/package/vue-chat-scroll/v/alpha) with the npm (or yarn) package manager:
+The recommended way of installing _vue-chat-scroll_ is using the [npm package](https://www.npmjs.com/package/vue3-chat-scroll) with the npm package manager:
 
 ```bash
-npm i vue-chat-scroll@alpha
+npm i vue3-chat-scroll
 ```
 
-After installing the package, you must use the _vue-chat-scroll_ [plugin](https://vuejs.org/v2/guide/plugins.html#Using-a-Plugin) :
+After installing the package, you must use the _vue-chat-scroll_ [plugin](https://vuejs.org/guide/reusability/plugins.html) :
 
 ```js
 
-import VueChatScroll from 'vue-chat-scroll';
+import VueChatScroll from 'vue3-chat-scroll';
 
-Vue.use(VueChatScroll);
-
-new Vue(...);
+app.use(VueChatScroll);
 ```
 
-#### Using a script tag
+### Using a script tag
 
 If working on a proof of concept or a fiddle, it can be easier to use a script tag. We recommend using a CDN such as unpkg or jsdelvr.
 
 ```html
-<script src="https://unpkg.com/vue-chat-scroll@alpha/dist/vue-chat-scroll.js"></script>
+<script src="https://unpkg.com/vue3-chat-scroll/dist/vue-chat-scroll.js"></script>
 ```
-
-_vue-chat-scroll_ will attempt to auto-register itself with Vue. This should work as long as `window.Vue` is defined.
 
 ## Usage
 
@@ -48,7 +48,3 @@ You may configure the directive by passing an object as well. For example, the `
 ```
 
 Please refer to the `Config` interface and `defaultConfig` object in [config.ts](src/config.ts) to find out more about what can be configured, as well as what the default configuration values are.
-
-## Examples
-
-🧸 Bear with us, all of this is work in progress. We'll be adding some examples of how this plugin can be used to build a fully-featured chat (such as Slack's one), or even a console looking log viewer.
