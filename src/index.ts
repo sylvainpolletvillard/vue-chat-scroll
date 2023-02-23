@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-import { bootstrap, plugin } from './plugin';
+import { plugin } from './plugin';
 
-bootstrap();
 export default plugin;
