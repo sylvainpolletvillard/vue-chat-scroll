@@ -38,8 +38,7 @@ test('it calls scroll when an item is added', async () => {
     }
    });
 
-  items.push('A new item')  
-  await (wrapper.vm as any).$nextTick();
+  await wrapper.setData({ items: ['A new item'] });
   expect(scroll).toHaveBeenCalledTimes(1);
   expect(scroll).toHaveBeenCalledWith(wrapper.element);
 });
@@ -60,7 +59,7 @@ test('it calls scroll when an item is removed', async () => {
    });
 
   items.pop();
-  await (wrapper.vm as any).$nextTick();
+  await wrapper.setData({ items });
   expect(scroll).toHaveBeenCalledTimes(1);
   expect(scroll).toHaveBeenCalledWith(wrapper.element);
 });
@@ -81,14 +80,13 @@ test('it obeys the enabled configuration parameter', async () => {
    });
   
   items.pop();
-  await (wrapper.vm as any).$nextTick();
+  await wrapper.setData({ items });   
   expect(scroll).not.toHaveBeenCalled();
 
 
   enabled.value = true;
   items.pop();
-
-  await (wrapper.vm as any).$nextTick();
+  await wrapper.setData({ items });
   expect(scroll).toHaveBeenCalledTimes(1);
   expect(scroll).toHaveBeenCalledWith(wrapper.element);
 });
@@ -113,7 +111,7 @@ test('it correctly works when prepending', async () => {
   vi.spyOn(wrapper.element, 'scrollTop', 'get').mockImplementation(() => 50);
 
   items.pop();
-  await (wrapper.vm as any).$nextTick();
+  await wrapper.setData({ items });
   expect(scroll).toHaveBeenCalledWith(wrapper.element, false);
 
   // We've now scrolled all the way to the top.
@@ -122,6 +120,6 @@ test('it correctly works when prepending', async () => {
   vi.spyOn(wrapper.element, 'scrollHeight', 'get').mockImplementation(() => 75);
 
   items.unshift(0);
-  await (wrapper.vm as any).$nextTick();
+  await wrapper.setData({ items });
   expect(scroll).toHaveBeenCalledWith(wrapper.element, 25);
 });

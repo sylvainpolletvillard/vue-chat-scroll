@@ -47,6 +47,7 @@ export const directive: ObjectDirective = {
     if (observers.has(el)) observers.get(el).disconnect();
     const config: Config = { ...defaultConfig, ...binding.value };
     const mutationCallback: MutationCallback = () => { mutationObserved(el, config); };
+    mutationObserved(el, config);
 
     const mutationObserver = new MutationObserver(mutationCallback);
     mutationObserver.observe(el, { childList: true, subtree: true });
